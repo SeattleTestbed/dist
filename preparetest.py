@@ -8,6 +8,11 @@ emptied before files are copied over.
 It is assumed that you have checked out all the required repos of 
 SeattleTestbed into the parent directory of this script.
 
+NOTE WELL: The repositories are used as-is. No attempt is made to switch 
+    to a specific branch, pull from remotes, etc.
+    (In a future version of this script, the currently active branch 
+    for each repo will be displayed as a visual reminder of this fact.)
+
 <Usage>
   preparetest.py  [-t] [-v] [-c] [-r] <target_directory>
 
