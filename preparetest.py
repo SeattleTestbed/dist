@@ -1,49 +1,31 @@
 """
-<Author>
-  Cosmin Barsan
-  
-  Edited to add an optional argument to also copy the repy tests by 
-  Brent Couvrette on November 13, 2008.
+This script first erases all the files in a target directory, and then 
+copies the necessary files to run Repy into it. Afterwards, the .mix 
+files in the target directory are ran through the preprocessor.  
+The target directory that is passed to the script must exist. It is 
+emptied before files are copied over.
 
-  Conrad Meyer, Thu Nov 26 2009: Move dynamic ports code from run_tests.py
-  to preparetest.py.
-
-  Moshe Kaplan, 2012-03-14: Merge in changes from modified repyv1 and minor
-  cleanup.
-
-<Start Date>
-  October 3, 2008
-
-<Description>
-  This script was adapted from the bash script preparetest. This script first
-  erases all the files in a target directory and then copies the necessary 
-  files to run repy into it. Afterwards, the .mix files in the target directory
-  are ran through the preprocessor.  The target directory that is passed to the
-  script must exist.
+It is assumed that you have checked out all the required repos of 
+SeattleTestbed into the parent directory of this script.
 
 <Usage>
-  preparetest.py  [-t]  [-v] [-c] [-r] <target_directory>
+  preparetest.py  [-t] [-v] [-c] [-r] <target_directory>
 
     -t or --testfiles copies in all the files required to run the unit tests
-    -v or --verbose displays significantly more output on failure to processa mix file
+    -v or --verbose displays significantly more output on failure to process 
+                    a mix file
     -c or --checkapi copies the checkapi source files
     -r or --randomports replaces the default ports of 12345, 12346, and 12347
                         with three random ports between 52000 and 53000. 
 
 <Example>
-  Using preparetest to prepare and run the unit tests
-    user@vm:~$ cd repy_v2/
-    user@vm:~/repy_v2$ mkdir test
-    user@vm:~/repy_v2$ python preparetest.py -t test
-    user@vm:~/repy_v2$ cd test
-    user@vm:~/repy_v2/test$ python utf.py -m repyv2api
-
-
-<Notes>
-  This file is also used directly by trunk/dist/make_base_installers.py. Also
-  let Zack know if any adaptions are made to this file so the base installers
-  can continue to be created correctly.  See ticket #501 about removing or
-  adapting make_base_installer.py's dependence on this file.  (Zack 7/2/09)
+  Put the Repy runtime and unit test files into a temporary dir, 
+  and run the unit tests for module "repyv2api" there.
+    user@vm:seattle$ cd dist
+    user@vm:dist$ mkdir /tmp/test
+    user@vm:dist$ python preparetest.py -t /tmp/test
+    user@vm:dist$ cd /tmp/test
+    user@vm:test$ python utf.py -m repyv2api
 
 """
 
