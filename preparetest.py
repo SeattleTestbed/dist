@@ -38,22 +38,27 @@ import optparse
 import subprocess
 
 
-# import testportfiller from root_dir\repy\tests.
-sys.path.insert(0, os.path.join(os.getcwd(), "repy", "tests"))
+# import testportfiller from path ../repy_v1/tests
+sys.path.insert(0, os.path.join(os.path.dirname(os.getcwd()), "repy_v1", "tests"))
 import testportfiller
-# Remove root_dir\repy\tests from the path
+# Remove testportfiller's path again
 sys.path = sys.path[1:]
 
-# This function copies files (in the current directory) that match the 
-# expression to the target folder
-# The source files are from the current directory.
-# The target directory must exist.
-# file_expr may contain wildcards
+
+
 def copy_to_target(file_expr, target):
+  """
+  This function copies files (in the current directory) that match the 
+  expression file_expr to the target folder. 
+  The source files are from the current directory.
+  The target directory must exist.
+  file_expr may contain wildcards (shell globs).
+  """
   files_to_copy = glob.glob(file_expr)
   for file_path in files_to_copy:
     if os.path.isfile(file_path):
-      shutil.copyfile(file_path,target +"/"+os.path.basename(file_path))
+      shutil.copyfile(file_path, target + "/" +os.path.basename(file_path))
+
 
 
 def copy_tree_to_target(source, target, ignore=None):
@@ -92,10 +97,13 @@ def copy_tree_to_target(source, target, ignore=None):
         os.path.join(full_target_path, relative_path))
 
 
-# Run the .mix files in current directory through the preprocessor 
-# script_path specifies the name of the preprocessor script
-# The preprocessor script must be in the working directory
+
 def process_mix(script_path, verbose):
+  """
+  Run the .mix files in current directory through the preprocessor.
+  script_path specifies the name of the preprocessor script.
+  The preprocessor script must be in the working directory.
+  """
   mix_files = glob.glob("*.mix")
   error_list = []
 
@@ -118,9 +126,15 @@ def process_mix(script_path, verbose):
       print '-'*80
 
 
+
 def exec_command(command):
+  """
+  Execute command on a shell, return a tuple containing the resulting 
+  standard output and standard error (as strings).
+  """
   # Windows does not like close_fds and we shouldn't need it so...
-  process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, 
+      stderr=subprocess.PIPE)
 
   # get the output and close
   theout = process.stdout.read()
@@ -152,11 +166,15 @@ def exec_command(command):
 
 
 
-# Prints the given error message and the help string, then exits
 def help_exit(errMsg, parser):
+  """
+   Prints the given error message and the help string, then exits
+  """
   print errMsg
   parser.print_help()
   sys.exit(1)
+
+
 
 def main():
 
@@ -165,18 +183,17 @@ def main():
   parser = optparse.OptionParser(usage=helpstring)
 
   parser.add_option("-t", "--testfiles", action="store_true",
-                    dest="include_tests", default=False,
-                    help="Include files required to run the unit tests ")
+      dest="include_tests", default=False,
+      help="Include files required to run the unit tests ")
   parser.add_option("-v", "--verbose", action="store_true",
-                    dest="verbose", default=False,
-                    help="Show more output on failure to process a .mix file")
+      dest="verbose", default=False,
+      help="Show more output on failure to process a .mix file")
   parser.add_option("-c", "--checkapi", action="store_true", 
-                    dest="copy_checkapi", default=False,
-                    help="Include checkAPI files")
+      dest="copy_checkapi", default=False,
+      help="Include checkAPI files")
   parser.add_option("-r", "--randomports", action="store_true", 
-                    dest="randomports", default=False,
-                    help="Replace the default ports with random ports between \
-                           52000 and 53000. ")
+      dest="randomports", default=False,
+      help="Replace the default ports with random ports between 52000 and 53000. ")
 
   (options, args) = parser.parse_args()
 
@@ -187,7 +204,7 @@ def main():
     target_dir = args[0]
 
   # Make sure they gave us a valid directory
-  if not( os.path.isdir(target_dir) ):
+  if not os.path.isdir(target_dir):
     help_exit("Supplied target is not a directory", parser)
 
   # Set variables according to the provided options.
@@ -207,7 +224,7 @@ def main():
   # Empty the destination
   for entry in files_to_remove: 
     if os.path.isdir(entry):
-      shutil.rmtree(entry)		
+      shutil.rmtree(entry)
     else:
       os.remove(entry)
 
@@ -226,11 +243,11 @@ def main():
 
   # Copy the necessary files to the test folder
   copy_to_target("repy/*", target_dir)
-  copy_to_target("repy/*", os.path.join(target_dir,"repyV2"))
-  copy_to_target("repy/repyV1/*", os.path.join(target_dir,"repyV1"))
+  copy_to_target("repy/*", os.path.join(target_dir, "repyV2"))
+  copy_to_target("repy/repyV1/*", os.path.join(target_dir, "repyV1"))
   copy_to_target("nodemanager/*", target_dir)
   copy_to_target("portability/*", target_dir)
-  copy_to_target("portability/*", os.path.join(target_dir,"repyV2"))
+  copy_to_target("portability/*", os.path.join(target_dir, "repyV2"))
   copy_to_target("seattlelib/*", target_dir)
   copy_to_target("seattlelib/dylink.r2py", os.path.join(target_dir, "repyV2"))
   copy_to_target("seattlelib/textops.py", os.path.join(target_dir, "repyV2"))
@@ -239,8 +256,6 @@ def main():
   copy_tree_to_target("seash/pyreadline/", os.path.join(target_dir, 'pyreadline/'), ignore=".svn")
   copy_tree_to_target("seash/modules/", os.path.join(target_dir, 'modules/'), ignore=".svn")
   copy_to_target("seattlegeni/xmlrpc_clients/*", target_dir)
-  copy_to_target("affix/*", target_dir)
-  #copy_to_target("shims/proxy/*", target_dir)
   copy_to_target("softwareupdater/*", target_dir)
   copy_to_target("autograder/nm_remote_api.mix", target_dir)
   copy_to_target("keydaemon/*", target_dir)
