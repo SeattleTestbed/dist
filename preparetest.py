@@ -171,6 +171,50 @@ def exec_command(command):
 
 
 
+def replace_string(old_string, new_string, file_name_pattern="*"):
+  """
+  <Purpose>
+    Go through all the files in the current folder and replace
+    every match of the old string in the file with the new
+    string.
+
+  <Arguments>
+    old_string - The string we want to replace.
+ 
+    new_string - The new string we want to replace the old string
+      with.
+
+    file_name_pattern - The pattern of the file name if you want
+      to reduce the number of files we look at. By default the 
+      function looks at all files.
+
+  <Exceptions>
+    None.
+
+  <Side Effects>
+    Many files may get modified.
+
+  <Return>
+    None
+  """
+
+  for testfile in glob.glob(file_name_pattern):
+    # Read in the initial file.
+    inFile = file(testfile, 'r')
+    filestring = inFile.read()
+    inFile.close()
+
+    # Replace any form of the matched old string with
+    # the new string.
+    filestring = filestring.replace(old_string, new_string)
+
+    # Write the file back.
+    outFile = file(testfile, 'w')
+    outFile.write(filestring)
+    outFile.close()
+
+
+
 def help_exit(errMsg, parser):
   """
    Prints the given error message and the help string, then exits
@@ -182,7 +226,6 @@ def help_exit(errMsg, parser):
 
 
 def main():
-
   # Parse the options provided. 
   helpstring = "python preparetest.py [-t] [-v] [-c] [-r] <target>"
   parser = optparse.OptionParser(usage=helpstring)
@@ -326,54 +369,6 @@ def main():
 
   # Change back to root project directory
   os.chdir(current_dir) 
-
-
-
-
-
-def replace_string(old_string, new_string, file_name_pattern="*"):
-  """
-  <Purpose>
-    Go through all the files in the current folder and replace
-    every match of the old string in the file with the new
-    string.
-
-  <Arguments>
-    old_string - The string we want to replace.
- 
-    new_string - The new string we want to replace the old string
-      with.
-
-    file_name_pattern - The pattern of the file name if you want
-      to reduce the number of files we look at. By default the 
-      function looks at all files.
-
-  <Exceptions>
-    None.
-
-  <Side Effects>
-    Many files may get modified.
-
-  <Return>
-    None
-  """
-
-  for testfile in glob.glob(file_name_pattern):
-    # Read in the initial file.
-    inFile = file(testfile, 'r')
-    filestring = inFile.read()
-    inFile.close()
-
-    # Replace any form of the matched old string with
-    # the new string.
-    filestring = filestring.replace(old_string, new_string)
-
-    # Write the file back.
-    outFile = file(testfile, 'w')
-    outFile.write(filestring)
-    outFile.close()
-
-
 
 
 
