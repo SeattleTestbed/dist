@@ -262,8 +262,8 @@ def main():
   copy_checkapi = options.copy_checkapi
 
 
-  # Store current directory
-  current_dir = os.getcwd()
+  # This script's parent directory is the root dir of all repositories
+  repos_root_dir = os.path.dirname(os.getcwd())
 
   # Set working directory to the target
   os.chdir(target_dir)	
@@ -276,10 +276,7 @@ def main():
     else:
       os.remove(entry)
 
-  # Return to previous working directory
-  os.chdir(current_dir) 
-
-  # Create the two required directories
+  # Create directories for each Repy version under the target
   repy_dir_dict = {'repyv1' : os.path.join(target_dir, "repyV1"),
                    'repyv2' : os.path.join(target_dir, "repyV2")
                    }
@@ -289,45 +286,40 @@ def main():
       os.makedirs(repy_dir)
 
 
-  # Copy the necessary files to the test folder
-  copy_to_target("repy/*", target_dir)
-  copy_to_target("repy/*", os.path.join(target_dir, "repyV2"))
-  copy_to_target("repy/repyV1/*", os.path.join(target_dir, "repyV1"))
+  # Return to the repo root
+  os.chdir(repos_root_dir)
+
+  # Copy the necessary files to the target folder
+  copy_to_target("repy_v2/*", target_dir)
+  copy_to_target("repy_v2/*", os.path.join(target_dir, "repyV2"))
+  copy_to_target("repy_v1/*", os.path.join(target_dir, "repyV1"))
   copy_to_target("nodemanager/*", target_dir)
   copy_to_target("portability/*", target_dir)
   copy_to_target("portability/*", os.path.join(target_dir, "repyV2"))
-  copy_to_target("seattlelib/*", target_dir)
-  copy_to_target("seattlelib/dylink.r2py", os.path.join(target_dir, "repyV2"))
+  copy_to_target("seattlelib_v2/*", target_dir)
+  copy_to_target("seattlelib_v2/dylink.r2py", os.path.join(target_dir, "repyV2"))
   copy_to_target("seattlelib/textops.py", os.path.join(target_dir, "repyV2"))
   copy_to_target("nodemanager/servicelogger.py", os.path.join(target_dir, "repyV2"))
   copy_to_target("seash/*", target_dir)
-  copy_tree_to_target("seash/pyreadline/", os.path.join(target_dir, 'pyreadline/'), ignore=".svn")
-  copy_tree_to_target("seash/modules/", os.path.join(target_dir, 'modules/'), ignore=".svn")
-  copy_to_target("seattlegeni/xmlrpc_clients/*", target_dir)
+  copy_tree_to_target("seash/pyreadline/", os.path.join(target_dir, 'pyreadline/'), ignore=".git")
+  copy_tree_to_target("seash/modules/", os.path.join(target_dir, 'modules/'), ignore=".git")
+  copy_to_target("clearinghouse/xmlrpc_clients/*", target_dir)
   copy_to_target("softwareupdater/*", target_dir)
-  copy_to_target("autograder/nm_remote_api.mix", target_dir)
-  copy_to_target("keydaemon/*", target_dir)
   copy_to_target("dist/update_crontab_entry.py", target_dir)
   # The license must be included in anything we distribute.
-  copy_to_target("LICENSE.TXT", target_dir)
+  copy_to_target("dist/LICENSE.TXT", target_dir)
 
-  # CheckAPI source
-  if copy_checkapi:
-    copy_to_target("checkapi/*", target_dir)
-  
   if repytest:
     # Only copy the tests if they were requested.
-    copy_to_target("repy/tests/restrictions.*", target_dir)
+    copy_to_target("repy_v2/tests/restrictions.*", target_dir)
     copy_to_target("utf/*.py", target_dir)
     copy_to_target("utf/tests/*.py", target_dir)
-    copy_to_target("repy/testsV2/*", target_dir)
+    copy_to_target("repy_v2/testsV2/*", target_dir) # XXX Scheduled for merge with repy_v2/tests
     copy_to_target("nodemanager/tests/*", target_dir)
     copy_to_target("portability/tests/*", target_dir)
     copy_to_target("seash/tests/*", target_dir)
-    copy_tree_to_target("seash/tests/modules/", os.path.join(target_dir, 'modules/'), ignore=".svn")
-    copy_to_target("seattlelib/tests/*", target_dir)
-    #copy_to_target("keydaemon/tests/*", target_dir)
-    copy_to_target("shims/tests/*", target_dir)
+    copy_tree_to_target("seash/tests/modules/", os.path.join(target_dir, 'modules/'), ignore=".git")
+    copy_to_target("seattlelib_v2/tests/*", target_dir)
 
     # The web server is used in the software updater tests
     #copy_to_target("assignments/webserver/*", target_dir)
@@ -368,7 +360,7 @@ def main():
 
 
   # Change back to root project directory
-  os.chdir(current_dir) 
+  os.chdir(repos_root_dir) 
 
 
 
