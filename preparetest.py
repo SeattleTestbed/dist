@@ -290,6 +290,8 @@ def main():
   os.chdir(repos_root_dir)
 
   # Copy the necessary files to the target folder
+  copy_to_target("affix-repo/affix/*", target_dir)
+  copy_to_target("affix-repo/affix/affix_components/*", target_dir)
   copy_to_target("repy_v2/*", target_dir)
   copy_to_target("repy_v2/*", os.path.join(target_dir, "repyV2"))
   copy_to_target("repy_v1/*", os.path.join(target_dir, "repyV1"))
