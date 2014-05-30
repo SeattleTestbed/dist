@@ -193,13 +193,14 @@ def prepare_gen_files(trunk_location, temp_install_dir, include_tests, pubkey, p
   # To run /trunk/preparetest.py, we must be in that directory (probably a bug
   # in preparetest.py?)
   original_dir = os.getcwd()
-  os.chdir(trunk_location)
+  preparetest_dir = trunk_location + os.sep + "dist"
+  os.chdir(preparetest_dir)
   if include_tests:
-    p = subprocess.Popen([sys.executable, trunk_location + os.sep + 
+    p = subprocess.Popen([sys.executable, preparetest_dir + os.sep + 
         "preparetest.py", "-t", temp_install_dir])
     p.wait()
   else:
-    p = subprocess.Popen([sys.executable, trunk_location + os.sep + 
+    p = subprocess.Popen([sys.executable, preparetest_dir + os.sep + 
         "preparetest.py", temp_install_dir])
     p.wait()
   os.chdir(original_dir)
