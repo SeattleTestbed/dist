@@ -1,18 +1,6 @@
 """
-<Program Name>
-  make_base_installers.py
-
-<Started>
-  November 2008
-    Revised May 23, 2009
-    Revised April 6, 2010
-
-<Author>
-  Carter Butaud
-    Revised by Zachary Boka
-
-<Purpose>
-  Builds the installers for one or more of the supported operating systems,
+make_base_installers.py --
+  Build the installers for one or more of the supported operating systems,
   depending on options given. Runs on Linux systems only.
 
   Usage: python make_base_installer.py m|l|w|i|a|t path/to/trunk/ pubkey
@@ -44,6 +32,7 @@ import clean_folder
 # The name of the base directory in each installer.
 BASE_INSTALL_DIR = "seattle" 
 BASE_PROGRAM_FILES_DIR = "seattle/seattle_repy"
+
 # The base name of each installer = for instance, "seattle_win.zip"
 INSTALLER_NAME = "seattle"
 
@@ -77,7 +66,6 @@ def get_inst_name(dist, version):
       Linux, Winmob, or Android.
 
     version:
-
       A string to be appended between the dist and the extension - for
       instance, if version is "0.1d", then the Linux installer name will
       be "seattle_linux0.1d.tgz".
@@ -119,7 +107,6 @@ def check_flags(flags):
 
   <Arguments>
     flags:
-
       String containing the flags passed in by the user.
 
   <Exceptions>
@@ -159,8 +146,7 @@ def check_flags(flags):
 
 
 
-def prepare_gen_files(trunk_location,temp_install_dir,include_tests,pubkey,
-                      privkey,finalfiles):
+def prepare_gen_files(trunk_location, temp_install_dir, include_tests, pubkey, privkey, finalfiles):
   """
   <Purpose>
     Prepare the general non-installer-specific files (needed for all installers)
@@ -209,32 +195,32 @@ def prepare_gen_files(trunk_location,temp_install_dir,include_tests,pubkey,
   original_dir = os.getcwd()
   os.chdir(trunk_location)
   if include_tests:
-    p = subprocess.Popen(["python",trunk_location + os.sep + "preparetest.py",
-                          "-t",temp_install_dir])
+    p = subprocess.Popen([sys.executable, trunk_location + os.sep + 
+        "preparetest.py", "-t", temp_install_dir])
     p.wait()
   else:
-    p = subprocess.Popen(["python",trunk_location + os.sep + "preparetest.py",
-                          temp_install_dir])
+    p = subprocess.Popen([sys.executable, trunk_location + os.sep + 
+        "preparetest.py", temp_install_dir])
     p.wait()
   os.chdir(original_dir)
 
 
-  # Copy Anthony Honstain's benchmarking scripts to the installer.
+  # Copy the benchmarking scripts to the installer directory
   shutil.copy2(trunk_location + "/resource/benchmark_resources.py", 
-               temp_install_dir)
+      temp_install_dir)
   shutil.copy2(trunk_location + "/resource/Mac_BSD_resources.py",
-               temp_install_dir)
+      temp_install_dir)
   shutil.copy2(trunk_location + "/resource/create_installer_state.py",
-               temp_install_dir)
+      temp_install_dir)
   shutil.copy2(trunk_location + "/resource/measuredisk.py", temp_install_dir)
   shutil.copy2(trunk_location + "/resource/vessel.restrictions",
-               temp_install_dir)
+      temp_install_dir)
   shutil.copy2(trunk_location + "/resource/Linux_resources.py",
-               temp_install_dir)
+      temp_install_dir)
   shutil.copy2(trunk_location + "/resource/measure_random.py",
-               temp_install_dir)
+      temp_install_dir)
   shutil.copy2(trunk_location + "/resource/Win_WinCE_resources.py",
-               temp_install_dir)
+      temp_install_dir)
 
   # Copy the universal installer and uninstaller to the program directory.
   shutil.copy2(trunk_location + "/dist/seattleinstaller.py", temp_install_dir)
@@ -242,7 +228,7 @@ def prepare_gen_files(trunk_location,temp_install_dir,include_tests,pubkey,
 
   # Copy the script that stops all running seattle processes.
   shutil.copy2(trunk_location + "/dist/stop_all_seattle_processes.py",
-               temp_install_dir)
+      temp_install_dir)
 
   # Copy the script that will update old crontab entries on Linux and Darwin
   # systems to the new 2009 seattle crontab entry.  This must remain in the
@@ -250,20 +236,20 @@ def prepare_gen_files(trunk_location,temp_install_dir,include_tests,pubkey,
   # installed seattle with the previous, old crontab entry, then lost permission
   # to modify his crontab.  In the event that he regains permission to modify
   # his crontab, the previously installed crontab entry must be updated.
-  shutil.copy2(trunk_location \
-                 + "/dist/update_crontab_entry.py", temp_install_dir)
+  shutil.copy2(trunk_location + "/dist/update_crontab_entry.py", 
+      temp_install_dir)
 
   # Clean the folder of unnecessary files before generating metafile.
   clean_folder.clean_folder(trunk_location + "/dist/initial_files.fi",
-                            temp_install_dir)
+      temp_install_dir)
 
   # To run writemetainfo.py, we must be in that directory (probably a bug in
   # writemetainfo.py?)
   os.chdir(temp_install_dir)
 
   # Generate the metainfo file.
-  p = subprocess.Popen(["python",temp_install_dir + os.sep + "writemetainfo.py",
-                        privkey,pubkey,"-n"])
+  p = subprocess.Popen([sys.executable, temp_install_dir + os.sep + 
+      "writemetainfo.py", privkey, pubkey, "-n"])
   p.wait()
   os.chdir(original_dir)
 
@@ -278,7 +264,7 @@ def prepare_gen_files(trunk_location,temp_install_dir,include_tests,pubkey,
     # Run clean_folder a final time to ensure the final directory contains all
     # the necessary files now that the last files have been added.
     clean_folder.clean_folder(trunk_location + "/dist/final_files.fi",
-                              temp_install_dir)
+        temp_install_dir)
 
 
   return os.listdir(temp_install_dir)
@@ -286,8 +272,7 @@ def prepare_gen_files(trunk_location,temp_install_dir,include_tests,pubkey,
 
 
 
-def package_win_gui(trunk_location, temp_tarball_dir, zip_inst_name,
-                    gui_inst_name):
+def package_win_gui(trunk_location, temp_tarball_dir, zip_inst_name, gui_inst_name):
   """
   <Purpose>
     Packages the installation files for Windows into a GUI executable file
@@ -324,17 +309,17 @@ def package_win_gui(trunk_location, temp_tarball_dir, zip_inst_name,
   # Create a subdirectory where the GUI installer will be created, and copy all
   # necessary files there.
   win_gui_location = tempfile.mkdtemp()
-  shutil.copy(trunk_location + os.sep + WINDOWS_GUI_PATH + os.sep \
-                + "seattle_gui_creator.nsi", win_gui_location)
+  shutil.copy(trunk_location + os.sep + WINDOWS_GUI_PATH + os.sep +
+      "seattle_gui_creator.nsi", win_gui_location)
 
   # Extract the zipfile to the win_gui_location to get all the contents that
   # will be compressed into the Windows gui installer.
-  installer_zipfile = zipfile.ZipFile(temp_tarball_dir + os.sep + zip_inst_name,
-                                      'r', zipfile.ZIP_DEFLATED)
+  installer_zipfile = zipfile.ZipFile(temp_tarball_dir + os.sep + 
+      zip_inst_name, 'r', zipfile.ZIP_DEFLATED)
   installer_zipfile.extractall(win_gui_location)
-  shutil.copy(trunk_location + os.sep + "dist" + os.sep \
-                + "extract_custom_info.py",win_gui_location + os.sep \
-                + "seattle" + os.sep + "seattle_repy")
+  shutil.copy(trunk_location + os.sep + "dist" + os.sep + 
+      "extract_custom_info.py",win_gui_location + os.sep +
+      "seattle" + os.sep + "seattle_repy")
 
 
   # Change directories to win_gui_location because the Windows gui creator
@@ -346,8 +331,8 @@ def package_win_gui(trunk_location, temp_tarball_dir, zip_inst_name,
   # Create the Win GUI executable with the Windows GUI builder (makensis.exe)
   # via subprocess.
   gui_creator = subprocess.Popen([WINDOWS_GUI_BUILDER_PATH,
-                                  "seattle_gui_creator.nsi"],
-                                 stdout=subprocess.PIPE)
+      "seattle_gui_creator.nsi"], stdout=subprocess.PIPE)
+
   # The communicate() function must be called to prevent the subprocess call
   # above from deadlocking.
   gui_creator.communicate()
@@ -355,7 +340,7 @@ def package_win_gui(trunk_location, temp_tarball_dir, zip_inst_name,
 
   # The Windows GUI builder script has a built-in name that it gives to the
   # installer (seattle_win_gui.exe), so rename this file to gui_inst_name.
-  os.rename("seattle_win_gui.exe",gui_inst_name)
+  os.rename("seattle_win_gui.exe", gui_inst_name)
 
   # Change back to the original directory.
   os.chdir(original_dir)
@@ -369,8 +354,7 @@ def package_win_gui(trunk_location, temp_tarball_dir, zip_inst_name,
 
 
 
-def package_win_or_winmob(trunk_location, temp_install_dir, temp_tarball_dir,
-                          inst_name, gen_files):
+def package_win_or_winmob(trunk_location, temp_install_dir, temp_tarball_dir, inst_name, gen_files):
   """
   <Purpose>
     Packages the installation files for Windows or Windows Mobile into a zipfile
@@ -407,22 +391,21 @@ def package_win_or_winmob(trunk_location, temp_install_dir, temp_tarball_dir,
   # Mobile.
   if not "winmob" in inst_name:
     shutil.copy2(trunk_location + "/dist/win/partial_win.zip",
-                 temp_tarball_dir + os.sep + inst_name)
+        temp_tarball_dir + os.sep + inst_name)
     installer_zipfile = zipfile.ZipFile(temp_tarball_dir + os.sep + inst_name,
-                                        "a", zipfile.ZIP_DEFLATED)
+        "a", zipfile.ZIP_DEFLATED)
   else:
     installer_zipfile = zipfile.ZipFile(temp_tarball_dir + os.sep + inst_name,
-                                        "w", zipfile.ZIP_DEFLATED)
+        "w", zipfile.ZIP_DEFLATED)
 
   # Put all general program files into zipfile.
   for fname in gen_files:
     if os.path.isdir(temp_install_dir + os.sep + fname):
       write_files_in_dir_to_zipfile(temp_install_dir + os.sep + fname, 
-                            BASE_PROGRAM_FILES_DIR + os.sep + fname + os.sep, 
-                            installer_zipfile)
+          BASE_PROGRAM_FILES_DIR + os.sep + fname + os.sep, installer_zipfile)
     else:
       installer_zipfile.write(temp_install_dir + os.sep + fname,
-                            BASE_PROGRAM_FILES_DIR + os.sep + fname)
+          BASE_PROGRAM_FILES_DIR + os.sep + fname)
 
 
 
@@ -437,15 +420,15 @@ def package_win_or_winmob(trunk_location, temp_install_dir, temp_tarball_dir,
 
   # Add OS-specific files to the zipfile.
   for fname in specific_files:
-    if not "svn" in fname and fname != "manifest.txt":
+    if not fname.startswith(".") and fname != "manifest.txt":
       # Add the README and LICENSE files to the highest-level directory
       # (BASE_INSTALL_DIR).
       if "LICENSE" in fname or "README" in fname:
         installer_zipfile.write(specific_installer_dir + os.sep + fname,
-                                BASE_INSTALL_DIR + os.sep + fname)
+            BASE_INSTALL_DIR + os.sep + fname)
       else:
         installer_zipfile.write(specific_installer_dir + os.sep + fname,
-                              BASE_PROGRAM_FILES_DIR + os.sep + fname)
+            BASE_PROGRAM_FILES_DIR + os.sep + fname)
 
 
 
@@ -459,17 +442,16 @@ def package_win_or_winmob(trunk_location, temp_install_dir, temp_tarball_dir,
 
   # Add script wrappers to the zipfile.
   for fname in script_wrappers:
-    if not "svn" in fname:
+    if not fname.startswith("."):
       installer_zipfile.write(script_wrappers_dir + os.sep + fname,
-                              BASE_INSTALL_DIR + os.sep + fname)
-
+          BASE_INSTALL_DIR + os.sep + fname)
 
   installer_zipfile.close()
-    
+
 
 
 def write_files_in_dir_to_zipfile(sourcepath, arcpath, zipfile):
-  '''
+  """
   <Purpose>
     Inserts the files in the current directory into the specified zipfile.
   <Arguments>
@@ -492,7 +474,7 @@ def write_files_in_dir_to_zipfile(sourcepath, arcpath, zipfile):
     None
   <Return>
     None
-  '''
+  """
   files = os.listdir(sourcepath)
 
   for fname in files:
@@ -503,8 +485,9 @@ def write_files_in_dir_to_zipfile(sourcepath, arcpath, zipfile):
     else:
       write_files_in_dir_to_zipfile(sourcefilepath, targetfilepath, zipfile)
 
-def package_linux_or_mac(trunk_location, temp_install_dir, temp_tarball_dir,
-                         inst_name, gen_files):
+
+
+def package_linux_or_mac(trunk_location, temp_install_dir, temp_tarball_dir, inst_name, gen_files):
   """
   <Purpose>
     Packages the installation files specific to Linux or Macintosh into a
@@ -537,36 +520,35 @@ def package_linux_or_mac(trunk_location, temp_install_dir, temp_tarball_dir,
     None.  
    """
 
-  installer_tarfile = tarfile.open(temp_tarball_dir + os.sep + inst_name,"w:gz")
+  installer_tarfile = tarfile.open(temp_tarball_dir + os.sep + inst_name, "w:gz")
     
   # Put all general installer files into the tar file.
   for fname in gen_files:
     if fname not in ['pyreadline']:
       installer_tarfile.add(temp_install_dir + os.sep + fname,
-                          BASE_PROGRAM_FILES_DIR + os.sep + fname,True)
+          BASE_PROGRAM_FILES_DIR + os.sep + fname, True)
 
 
 
   # Put all Linux- and Mac-specific files in to tarball.
-
 
   # First, copy all scripts that belong in BASE_PROGRAM_FILES_DIR.
   if "linux" in inst_name:
     specific_installer_dir = trunk_location + os.sep + LINUX_PATH
   else:
     specific_installer_dir = trunk_location + os.sep + MAC_PATH
+
   specific_files = os.listdir(specific_installer_dir)
 
   # Add the OS-specific files to the tarfile.
   for fname in specific_files:
-    if not "svn" in fname and fname != "manifest.txt":
+    if not fname.startswith(".") and fname != "manifest.txt":
       if "README" in fname or "LICENSE" in fname:
         installer_tarfile.add(specific_installer_dir + os.sep + fname,
-                              BASE_INSTALL_DIR + os.sep + fname,False)
+            BASE_INSTALL_DIR + os.sep + fname, False)
       else:
         installer_tarfile.add(specific_installer_dir + os.sep + fname,
-                              BASE_PROGRAM_FILES_DIR + os.sep + fname,False)
-
+            BASE_PROGRAM_FILES_DIR + os.sep + fname, False)
 
 
   # Second, copy all script wrappers (which call those in the
@@ -579,10 +561,9 @@ def package_linux_or_mac(trunk_location, temp_install_dir, temp_tarball_dir,
 
   # Add script wrappers to the zipfile.
   for fname in script_wrappers:
-    if not "svn" in fname:
+    if not fname.startswith("."):
       installer_tarfile.add(script_wrappers_dir + os.sep + fname,
-                            BASE_INSTALL_DIR + os.sep + fname,False)
-
+          BASE_INSTALL_DIR + os.sep + fname, False)
 
   installer_tarfile.close()
 
@@ -590,8 +571,7 @@ def package_linux_or_mac(trunk_location, temp_install_dir, temp_tarball_dir,
 
 
 
-def package_android(trunk_location, temp_install_dir, temp_tarball_dir,
-                    inst_name, gen_files):
+def package_android(trunk_location, temp_install_dir, temp_tarball_dir, inst_name, gen_files):
   """
   <Purpose>
     Packages the installation files specific to Android into a
@@ -625,18 +605,19 @@ def package_android(trunk_location, temp_install_dir, temp_tarball_dir,
     None.  
    """
 
-  installer_zipfile = zipfile.ZipFile(temp_tarball_dir+os.sep+inst_name, "w", zipfile.ZIP_DEFLATED)
+  installer_zipfile = zipfile.ZipFile(temp_tarball_dir + os.sep + inst_name, 
+      "w", zipfile.ZIP_DEFLATED)
     
   # Put all general program files into zipfile.
   for fname in gen_files:
     if os.path.isdir(temp_install_dir + os.sep + fname):
       if fname not in ['pyreadline']:
         write_files_in_dir_to_zipfile(temp_install_dir + os.sep + fname, 
-                            BASE_PROGRAM_FILES_DIR + os.sep + fname + os.sep, 
-                            installer_zipfile)
+            BASE_PROGRAM_FILES_DIR + os.sep + fname + os.sep, 
+            installer_zipfile)
     else:
       installer_zipfile.write(temp_install_dir + os.sep + fname,
-                            BASE_PROGRAM_FILES_DIR + os.sep + fname)
+          BASE_PROGRAM_FILES_DIR + os.sep + fname)
 
 
   # Put generic files in the zipfile.  (Same as Linux)
@@ -645,14 +626,13 @@ def package_android(trunk_location, temp_install_dir, temp_tarball_dir,
 
   # Add the OS-specific files to the zipfile.
   for fname in specific_files:
-    if not "svn" in fname and fname != "manifest.txt":
+    if not fname.startswith(".") and fname != "manifest.txt":
       if "README" in fname or "LICENSE" in fname:
         installer_zipfile.write(specific_installer_dir + os.sep + fname,
-                              BASE_INSTALL_DIR + os.sep + fname)
+            BASE_INSTALL_DIR + os.sep + fname)
       else:
         installer_zipfile.write(specific_installer_dir + os.sep + fname,
-                              BASE_PROGRAM_FILES_DIR + os.sep + fname)
-
+            BASE_PROGRAM_FILES_DIR + os.sep + fname)
 
 
   # Second, copy all script wrappers (which call those in the
@@ -662,9 +642,9 @@ def package_android(trunk_location, temp_install_dir, temp_tarball_dir,
 
   # Add script wrappers to the zipfile.
   for fname in script_wrappers:
-    if not "svn" in fname:
-      installer_zipfile.write(script_wrappers_dir + os.sep + fname, BASE_INSTALL_DIR + os.sep + fname)
-
+    if not fname.startswith("."):
+      installer_zipfile.write(script_wrappers_dir + os.sep + fname, 
+          BASE_INSTALL_DIR + os.sep + fname)
 
   installer_zipfile.close()
 
@@ -672,10 +652,9 @@ def package_android(trunk_location, temp_install_dir, temp_tarball_dir,
 
 
 
-
-
 def test_arguments(arguments):
   """
+  Check that the arguments supplied on the command line make sense.
   """
   # Test argument flags
   if len(arguments) < 6:
@@ -696,23 +675,20 @@ def test_arguments(arguments):
     return False
 
 
-  # Test argument paths, and get their absolute paths.
-  # Test trunk path.
-  if not os.path.exists(arguments[2]):
-    raise IOError("Trunk not found at " + arguments[2])
+  # Validate the existence of argument's paths and files
+  trunkdir, pubkey, privkey, outdir = arguments[2:6]
 
-  # Test output directory path.
-  if not os.path.exists(sys.argv[5]):
-    raise IOError("Output directory does not exist.")
+  if not os.path.exists(trunkdir):
+    raise IOError("Trunk not found at " + trunkdir)
 
-  # Test public key path.
-  if not os.path.exists(sys.argv[3]):
-    raise IOError("Public key not found.")
+  if not os.path.exists(outdir):
+    raise IOError("Output directory does not exist at " + outdir)
 
-  # Test private key path.
-  if not os.path.exists(sys.argv[4]):
-    raise IOError("Private key not found.")
+  if not os.path.exists(pubkey):
+    raise IOError("Public key not found at " + pubkey)
 
+  if not os.path.exists(privkey):
+    raise IOError("Private key not found at " + privkey)
 
 
   # All arguments are valid.
@@ -722,14 +698,21 @@ def test_arguments(arguments):
 
 
 def usage():
-  print "USAGE: python make_base_installer.py m|l|w|i|d|a|t path/to/trunk/ " \
-      + "pubkey privkey output/dir/ [version of seattle] " \
-      + "[--wg path/to/Windows/GUI/builder/makensis.exe]"
-  print "\tFLAGS: m,l,w,i,d,a,t represent the OS for which the base installer " \
-      + "is being created.  m = Macintosh, l = Linux, w = Windows, " \
-      + "i = Windows Mobile, d = Android, a = all systems. t = include tests in installer."
-  print "\tNOTE: The Windows GUI installer will ONLY be built if the 'w' or " \
-      + "'a' options are passed ALONG WITH the '--wg' option."
+  print """
+USAGE: python make_base_installer.py m|l|w|i|d|a|t path/to/trunk/ 
+  pubkey privkey output/dir/ [version of seattle]
+  [--wg path/to/Windows/GUI/builder/makensis.exe]
+
+FLAGS: 
+m,l,w,i,d,a,t represent the OS for which the base installer 
+is being created.  m = Macintosh, l = Linux, w = Windows, 
+i = Windows Mobile, d = Android, a = all systems; 
+t = include tests in installer.
+
+NOTE: The Windows GUI installer will ONLY be built if the 'w' or 
+'a' options are passed ALONG WITH the '--wg' option."
+"""
+
 
 
 def main():
@@ -821,8 +804,8 @@ def main():
   include_tests = False
   if "t" in installer_type:
       include_tests = True
-  gen_files = prepare_gen_files(trunk_location,temp_install_dir,include_tests,
-                                pubkey,privkey,True)
+  gen_files = prepare_gen_files(trunk_location, temp_install_dir, 
+      include_tests, pubkey, privkey, True)
   print "Complete."
 
 
@@ -834,14 +817,14 @@ def main():
   if "w" in installer_type or "a" in installer_type:
     inst_name = get_inst_name("win", version)
     package_win_or_winmob(trunk_location, temp_install_dir, temp_tarball_dir,
-                          inst_name, gen_files)
+        inst_name, gen_files)
     created_installers.append(inst_name)
 
     # See if we need to create the Windows GUI installer
     if WINDOWS_GUI_BUILDER_PATH:
       inst_name_gui = get_inst_name("win_gui", version)
       package_win_gui(trunk_location, temp_tarball_dir, inst_name,
-                      inst_name_gui)
+          inst_name_gui)
       created_installers.append(inst_name_gui)
 
 
@@ -849,7 +832,7 @@ def main():
   if "l" in installer_type or "a" in installer_type:
     inst_name = get_inst_name("linux", version)
     package_linux_or_mac(trunk_location, temp_install_dir, temp_tarball_dir,
-                         inst_name, gen_files)
+        inst_name, gen_files)
     created_installers.append(inst_name)
 
 
@@ -857,7 +840,7 @@ def main():
   if "m" in installer_type or "a" in installer_type:
     inst_name = get_inst_name("mac", version)
     package_linux_or_mac(trunk_location, temp_install_dir, temp_tarball_dir,
-                         inst_name, gen_files)
+        inst_name, gen_files)
     created_installers.append(inst_name)
 
 
@@ -865,14 +848,14 @@ def main():
   if "i" in installer_type or "a" in installer_type:
     inst_name = get_inst_name("winmob", version)
     package_win_or_winmob(trunk_location, temp_install_dir, temp_tarball_dir,
-                          inst_name, gen_files)
+        inst_name, gen_files)
     created_installers.append(inst_name)
 
   # Package the Android installer.
   if "d" in installer_type or "a" in installer_type:
     inst_name = get_inst_name("android", version)
     package_android(trunk_location, temp_install_dir, temp_tarball_dir,
-                          inst_name, gen_files)
+        inst_name, gen_files)
     created_installers.append(inst_name)
 
 
@@ -897,3 +880,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
