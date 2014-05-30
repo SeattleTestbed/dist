@@ -60,6 +60,9 @@ def copy_to_target(file_expr, target):
   file_expr may contain wildcards (shell globs).
   """
   files_to_copy = glob.glob(file_expr)
+  if files_to_copy == []:
+    print "WARNING: File expression '" + file_expr + "' does not match any files. Maybe the directory is empty, or the file / directory doesn't exist?"
+
   for file_path in files_to_copy:
     if os.path.isfile(file_path):
       shutil.copyfile(file_path, target + "/" +os.path.basename(file_path))
@@ -292,6 +295,7 @@ def main():
   # Copy the necessary files to the target folder
   copy_to_target("affix-repo/affix/*", target_dir)
   copy_to_target("affix-repo/affix/affix_components/*", target_dir)
+  copy_to_target("affix-repo/affix/affix_components/tcp_relay/*", target_dir)
   copy_to_target("repy_v2/*", target_dir)
   copy_to_target("repy_v2/*", os.path.join(target_dir, "repyV2"))
   copy_to_target("repy_v1/*", os.path.join(target_dir, "repyV1"))
