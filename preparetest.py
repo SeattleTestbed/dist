@@ -304,7 +304,7 @@ def main():
   copy_to_target("portability/*", os.path.join(target_dir, "repyV2"))
   copy_to_target("seattlelib_v2/*", target_dir)
   copy_to_target("seattlelib_v2/dylink.r2py", os.path.join(target_dir, "repyV2"))
-  copy_to_target("seattlelib/textops.py", os.path.join(target_dir, "repyV2"))
+  copy_to_target("seattlelib_v2/textops.py", os.path.join(target_dir, "repyV2"))
   copy_to_target("nodemanager/servicelogger.py", os.path.join(target_dir, "repyV2"))
   copy_to_target("seash/*", target_dir)
   copy_tree_to_target("seash/pyreadline/", os.path.join(target_dir, 'pyreadline/'), ignore=".git")
