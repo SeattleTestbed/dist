@@ -10,7 +10,9 @@
 
 VERSION=$1
 
-SOFTWARE_UPDATE_URL=http://blackbox.cs.washington.edu/updatesite/
+user=geni
+
+SOFTWARE_UPDATE_URL=http://seattlesoftwareupdater.poly.edu/updatesite/
 PUBLIC_KEY_FILE=/path/to/softwareupdater.publickey
 PRIVATE_KEY_FILE=/path/to/softwareupdater.privatekey
 
@@ -98,10 +100,10 @@ fi
 
 sudo chown geni seattle_*
 
-sudo -u geni ln -s -f seattle_${VERSION}_linux.tgz seattle_linux.tgz
-sudo -u geni ln -s -f seattle_${VERSION}_mac.tgz seattle_mac.tgz
-sudo -u geni ln -s -f seattle_${VERSION}_win.zip seattle_win.zip
-
+sudo -u $user ln -s -f seattle_${VERSION}_linux.tgz seattle_linux.tgz
+sudo -u $user ln -s -f seattle_${VERSION}_mac.tgz seattle_mac.tgz
+sudo -u $user ln -s -f seattle_${VERSION}_win.zip seattle_win.zip
+sudo -u $user ln -s -f seattle_${VERSION}_android.zip seattle_android.zip
 popd
 
 echo "New base installers created and installed for seattlegeni."
