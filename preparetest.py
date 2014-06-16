@@ -280,32 +280,31 @@ def main():
       os.remove(entry)
 
   # Create directories for each Repy version under the target
-  repy_dir_dict = {'repyv1' : os.path.join(target_dir, "repyV1"),
-                   'repyv2' : os.path.join(target_dir, "repyV2")
-                   }
+  repy_dir = {"v1" : os.path.join(target_dir, "repyV1"),
+      "v2" : os.path.join(target_dir, "repyV2") }
 
-  for repy_dir in repy_dir_dict.values():
-    if not os.path.exists(repy_dir):
-      os.makedirs(repy_dir)
+  for dir_name in repy_dir.values():
+    if not os.path.exists(dir_name):
+      os.makedirs(dir_name)
 
 
   # Return to the repo root
   os.chdir(repos_root_dir)
 
-  # Copy the necessary files to the target folder
+  # Copy the necessary files to the respective target folders
   copy_to_target("affix-repo/affix/*", target_dir)
   copy_to_target("affix-repo/affix/affix_components/*", target_dir)
   copy_to_target("affix-repo/affix/affix_components/tcp_relay/*", target_dir)
   copy_to_target("repy_v2/*", target_dir)
-  copy_to_target("repy_v2/*", os.path.join(target_dir, "repyV2"))
-  copy_to_target("repy_v1/*", os.path.join(target_dir, "repyV1"))
+  copy_to_target("repy_v2/*", repy_dir["v2"])
+  copy_to_target("repy_v1/*", repy_dir["v1"])
   copy_to_target("nodemanager/*", target_dir)
   copy_to_target("portability/*", target_dir)
-  copy_to_target("portability/*", os.path.join(target_dir, "repyV2"))
+  copy_to_target("portability/*", repy_dir["v2"])
   copy_to_target("seattlelib_v2/*", target_dir)
-  copy_to_target("seattlelib_v2/dylink.r2py", os.path.join(target_dir, "repyV2"))
-  copy_to_target("seattlelib_v2/textops.py", os.path.join(target_dir, "repyV2"))
-  copy_to_target("nodemanager/servicelogger.py", os.path.join(target_dir, "repyV2"))
+  copy_to_target("seattlelib_v2/dylink.r2py", repy_dir["v2"])
+  copy_to_target("seattlelib_v2/textops.py", repy_dir["v2"])
+  copy_to_target("nodemanager/servicelogger.py", repy_dir["v2"])
   copy_to_target("seash/*", target_dir)
   copy_tree_to_target("seash/pyreadline/", os.path.join(target_dir, 'pyreadline/'), ignore=".git")
   copy_tree_to_target("seash/modules/", os.path.join(target_dir, 'modules/'), ignore=".git")
