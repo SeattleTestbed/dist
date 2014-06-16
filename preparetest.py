@@ -291,26 +291,40 @@ def main():
   # Return to the repo root
   os.chdir(repos_root_dir)
 
-  # Copy the necessary files to the respective target folders
+  # Copy the necessary files to the respective target folders:
+  # Affix framework and components
   copy_to_target("affix-repo/affix/*", target_dir)
   copy_to_target("affix-repo/affix/affix_components/*", target_dir)
   copy_to_target("affix-repo/affix/affix_components/tcp_relay/*", target_dir)
+
+  # Nodemanager and RepyV2 runtime
   copy_to_target("repy_v2/*", target_dir)
-  copy_to_target("repy_v2/*", repy_dir["v2"])
-  copy_to_target("repy_v1/*", repy_dir["v1"])
   copy_to_target("nodemanager/*", target_dir)
   copy_to_target("portability/*", target_dir)
-  copy_to_target("portability/*", repy_dir["v2"])
   copy_to_target("seattlelib_v2/*", target_dir)
+
+  # RepyV2 runtime for vessels
+  copy_to_target("portability/*", repy_dir["v2"])
+  copy_to_target("repy_v2/*", repy_dir["v2"])
   copy_to_target("seattlelib_v2/dylink.r2py", repy_dir["v2"])
   copy_to_target("seattlelib_v2/textops.py", repy_dir["v2"])
   copy_to_target("nodemanager/servicelogger.py", repy_dir["v2"])
+
+  # RepyV1 runtime for vessels
+  copy_to_target("repy_v1/*", repy_dir["v1"])
+
+  # Seash
   copy_to_target("seash/*", target_dir)
   copy_tree_to_target("seash/pyreadline/", os.path.join(target_dir, 'pyreadline/'), ignore=".git")
   copy_tree_to_target("seash/modules/", os.path.join(target_dir, 'modules/'), ignore=".git")
+
+  # Clearinghouse XML-RPC interface
   copy_to_target("clearinghouse/xmlrpc_clients/*", target_dir)
+
+  # Software updater
   copy_to_target("softwareupdater/*", target_dir)
   copy_to_target("dist/update_crontab_entry.py", target_dir)
+
   # The license must be included in anything we distribute.
   copy_to_target("dist/LICENSE.TXT", target_dir)
 
