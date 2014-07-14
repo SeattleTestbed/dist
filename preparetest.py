@@ -312,9 +312,6 @@ def main():
 
   # RepyV1 runtime for vessels
   copy_to_target("repy_v1/*", repy_dir["v1"])
-  copy_to_target("seattlelib_v1/textops.py", repy_dir["v1"])
-  copy_to_target("repy_v2/persist.py", repy_dir["v1"])
-  copy_to_target("nodemanager/servicelogger.py", repy_dir["v1"])
 
   # Seash
   copy_to_target("seash/*", target_dir)
