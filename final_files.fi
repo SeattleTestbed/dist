@@ -189,24 +189,18 @@ req secureadvertise_server.r2py
 req secureclient.r2py
 
 # Affix additions 
-
-
-req restrictions.advertiseserver
-req affixstackinterface.r2py
-req affix_lock_wrapper.py
-req tcp_relay_common_lib.r2py
-req opendhtadvertise.r2py
 req affix_exceptions.r2py
-req baseaffix.r2py
-req natlayer_rpc.r2py
+req affix_repy_network_api_wrapper.r2py
 req affix_stack.r2py
-req affixpythoninterface.py
-req affixmisc.r2py
-req legacyaffix.r2py
-req nat_advertisement.r2py
-req noopaffix.r2py
 req affix_wrapper_lib.r2py
-req wrapper.r2py
-req tcprelayaffix.r2py
-req checkprivateipaffix.r2py
+
+req baseaffix.r2py
+req canilisten.r2py
 req coordinationaffix.r2py
+req makemehearaffix.r2py
+req namingandresolveraffix.r2py
+req noopaffix.r2py
+req tcp_relay_common_lib.r2py
+req tcprelayaffix.r2py
+req tcp_relay.r2py
+
