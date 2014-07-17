@@ -20,7 +20,7 @@ e=`cat $PUBLIC_KEY_FILE | cut -d' ' -f 1`
 n=`cat $PUBLIC_KEY_FILE | cut -d' ' -f 2`
 SOFTWARE_UPDATE_KEY="{'e':$e, 'n':$n}"
 
-SVN_TRUNK_DIR=/home/release/trunk
+REPO_PARENT_DIR=/home/release/SeattleTestbed
 
 BASE_INSTALLER_DIRECTORY=/var/www/dist
 
@@ -47,27 +47,27 @@ if [ ! -d "$BASE_INSTALLER_ARCHIVE_DIR" ]; then
   exit 1
 fi
 
-if [ ! -d "$SVN_TRUNK_DIR" ]; then
-  echo "SVN_TRUNK_DIR doesn't exist."
+if [ ! -d "$REPO_PARENT_DIR" ]; then
+  echo "REPO_PARENT_DIR doesn't exist."
   exit 1
 fi
 
-if [ "`grep -F "$VERSION" $SVN_TRUNK_DIR/nodemanager/nmmain.py`" == "" ]; then
-  echo "You need to set the version string in $SVN_TRUNK_DIR/nodemanager/nmmain.py"
+if [ "`grep -F "$VERSION" $REPO_PARENT_DIR/nodemanager/nmmain.py`" == "" ]; then
+  echo "You need to set the version string in $REPO_PARENT_DIR/nodemanager/nmmain.py"
   exit 1
 fi
 
-UPDATE_URL_FOUND=$(grep -F "softwareurl = \"$SOFTWARE_UPDATE_URL\"" $SVN_TRUNK_DIR/softwareupdater/softwareupdater.py)
+UPDATE_URL_FOUND=$(grep -F "softwareurl = \"$SOFTWARE_UPDATE_URL\"" $REPO_PARENT_DIR/softwareupdater/softwareupdater.py)
 
 if [ "$UPDATE_URL_FOUND" == "" ]; then
-  echo "Did not find the correct update url in $SVN_TRUNK_DIR/softwareupdater/softwareupdater.py"
+  echo "Did not find the correct update url in $REPO_PARENT_DIR/softwareupdater/softwareupdater.py"
   exit 1
 fi
 
-UPDATE_KEY_FOUND=$(grep -F "$SOFTWARE_UPDATE_KEY" $SVN_TRUNK_DIR/softwareupdater/softwareupdater.py)
+UPDATE_KEY_FOUND=$(grep -F "$SOFTWARE_UPDATE_KEY" $REPO_PARENT_DIR/softwareupdater/softwareupdater.py)
 
 if [ "$UPDATE_KEY_FOUND" == "" ]; then
-  echo "Did not find the correct update key in $SVN_TRUNK_DIR/softwareupdater/softwareupdater.py"
+  echo "Did not find the correct update key in $REPO_PARENT_DIR/softwareupdater/softwareupdater.py"
   exit 1
 fi
 
@@ -76,9 +76,9 @@ echo "Warning: failure after this point may leave seattlegeni with no base insta
 sudo mv -f $BASE_INSTALLER_DIRECTORY/seattle_* $BASE_INSTALLER_ARCHIVE_DIR
 
 echo "Building new base installers at $BASE_INSTALLER_DIRECTORY"
-sudo python $SVN_TRUNK_DIR/dist/make_base_installers.py \
+sudo python $REPO_PARENT_DIR/dist/make_base_installers.py \
   a \
-  $SVN_TRUNK_DIR \
+  $REPO_PARENT_DIR \
   $PUBLIC_KEY_FILE \
   $PRIVATE_KEY_FILE \
   $BASE_INSTALLER_DIRECTORY \
