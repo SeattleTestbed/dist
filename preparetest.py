@@ -293,9 +293,9 @@ def main():
 
   # Copy the necessary files to the respective target folders:
   # Affix framework and components
-  copy_to_target("affix-repo/*", target_dir)
-  copy_to_target("affix-repo/components/*", target_dir)
-  copy_to_target("affix-repo/services/tcp_relay/*", target_dir)
+  copy_to_target("affix/*", target_dir)
+  copy_to_target("affix/components/*", target_dir)
+  copy_to_target("affix/services/tcp_relay/*", target_dir)
 
   # Nodemanager and RepyV2 runtime
   copy_to_target("repy_v2/*", target_dir)
