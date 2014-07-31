@@ -1,18 +1,11 @@
 """
-<Author>
-  Evan Meagher
+build_demokit.py - Build a downloadable demokit tarball from 
+  Seattle files and demo applications
   
-<Started>
-  March 2010
-
-<Description>
-  Builds a downloadable demokit from Seattle files and demo applications in
-  trunk.
-  
-  Usage: usage: python build_demokit.py path/to/trunk/ output/dir/
+  Usage: usage: python build_demokit.py output/dir/
   
   Example usage:
-    python ./Seattle/trunk/dist/build_demokit.py ./Seattle/trunk/ ./demokit/
+    python ./SeattleTestbed/dist/build_demokit.py ./demokit/
 """
 
 import os
@@ -28,16 +21,13 @@ BASE_DEMOKIT_DIR = "seattle_demokit"
 
 
 
-def prepare_files(trunk_location, temp_demokit_dir):
+def prepare_files(temp_demokit_dir):
   """
   <Purpose>
     Prepare the general Seattle files and deposit them into the designated
     temporary directory.
 
   <Arguments>
-    trunk_location:
-      The path to the trunk of the repository.
-
     temp_demokit_dir:
       The temporary directory where the general files to be included in the
       demokit will be placed.
@@ -54,16 +44,8 @@ def prepare_files(trunk_location, temp_demokit_dir):
 
   # Run preparetest to generate and place all general Seattle files in the
   # temporary directory.
-
-  # To run /trunk/preparetest.py, we must be in that directory (a bug in
-  # preparetest.py?)
-  original_dir = os.getcwd()
-  os.chdir(trunk_location)
-  p = subprocess.Popen(["python",
-                        trunk_location + os.sep + "preparetest.py",
-                        temp_demokit_dir])
+  p = subprocess.Popen(["python", "preparetest.py", temp_demokit_dir])
   p.wait()
-  os.chdir(original_dir)
 
 
   # Copy necessary Seattle files
@@ -163,16 +145,11 @@ def validate_args(arguments):
   Tests arguments. Return True is valid.
   """
   # Test argument flags
-  if len(arguments) != 3:
+  if len(arguments) != 2:
     return False
 
-  # Test argument paths, and get their absolute paths.
-  # Test trunk path.
-  if not os.path.exists(arguments[1]):
-    raise IOError("Trunk not found at " + arguments[1])
-
   # Test output directory path.
-  if not os.path.exists(sys.argv[2]):
+  if not os.path.exists(sys.argv[1]):
     raise IOError("Output directory does not exist.")
 
   
@@ -187,7 +164,7 @@ def usage():
   """
   Prints usage string.
   """
-  print "usage: python build_demokit.py path/to/trunk/ output/dir/"
+  print "usage: python build_demokit.py output/dir/"
 
   
 
@@ -201,8 +178,7 @@ def main():
 
   # Reaching this point means all arguments are valid, so set the variables and
   # get full pathnames when necessary.
-  trunk_location = os.path.realpath(sys.argv[1])
-  output_dir = os.path.realpath(sys.argv[2])
+  output_dir = os.path.realpath(sys.argv[1])
 
 
 
@@ -214,10 +190,10 @@ def main():
   temp_archive_dir = tempfile.mkdtemp()
 
   # Prepare all files to go into demokit
-  prepare_files(trunk_location,temp_demokit_dir)
+  prepare_files(temp_demokit_dir)
 
   # Clean the temporary directory of unnecessary files
-  clean_folder.clean_folder(trunk_location + os.sep + "dist/demokit_files.fi", temp_demokit_dir)
+  clean_folder.clean_folder("demokit_files.fi", temp_demokit_dir)
   
   # Create archive
   package_demokit(temp_demokit_dir, temp_archive_dir)
