@@ -304,7 +304,7 @@ def main():
     if alist0 != "test" and alist0!= "#":
       copy_to_target(alist[count], target_dir)
       count=count + 1
-    elif alist0 != "#" and alist == "test" and repytest:
+    elif alist0 != "#" and alist0 == "test" and repytest:
       repo=alist[count]
       alist1=repo.split(' ', 1)[1]
       copy_to_target(alist1, target_dir)
