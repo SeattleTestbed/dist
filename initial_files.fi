@@ -32,7 +32,7 @@ del private_wrapper.repy
 del private_encasementlib.repy
 del dnscommon.repy
 del struct.repy
-del advertise_test_routine.repy
+del advertise_test_routine.r2py
 del private_hideprivate_layer.repy
 
 req domainnameinfo.r2py

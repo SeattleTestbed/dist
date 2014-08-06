@@ -28,12 +28,13 @@ del nat_advertisement.r2py
 del opendhtadvertise.r2py
 del multiplexer.r2py
 del natlayer_rpc.r2py
+del priority_queue.r2py
 
 del private_wrapper.repy
 del private_encasementlib.repy
 del dnscommon.repy
 del struct.repy
-del advertise_test_routine.repy
+del advertise_test_routine.r2py
 del private_hideprivate_layer.repy
 
 
@@ -157,7 +158,6 @@ req safe_eval.r2py
 req strace.py
 req stop_all_seattle_processes.py
 req geoip_client.r2py
-req priority_queue.r2py
 req centralizedadvertise_v2.r2py
 req udpcentralizedadvertise.r2py
 req readline_windows.py
