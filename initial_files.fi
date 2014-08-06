@@ -22,6 +22,11 @@ del key_daemon_parser.repy
 del nm_remote_api.py
 del rhizoma.py
 
+del natlayer_rpc.r2py
+del advertise_objects.r2py
+del priority_queue.r2py
+del multiplexer.r2py
+
 del private_wrapper.repy
 del private_encasementlib.repy
 del dnscommon.repy
@@ -146,7 +151,6 @@ req safe_eval.r2py
 req strace.py
 req stop_all_seattle_processes.py
 req geoip_client.r2py
-req priority_queue.r2py
 req centralizedadvertise_v2.r2py
 req udpcentralizedadvertise.r2py
 req readline_windows.py
@@ -160,8 +164,6 @@ req tcp_relay_common_lib.r2py
 req pydes.r2py
 req opendhtadvertise.r2py
 req librepythread.r2py
-req natlayer_rpc.r2py
-req advertise_objects.r2py
 req librepyrunloop.r2py
 req repyV2
 req exception_hierarchy.py

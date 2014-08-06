@@ -23,6 +23,8 @@ del nm_remote_api.py
 del rhizoma.py
 del *_repy.py
 
+del multiplexer.r2py
+
 del private_wrapper.repy
 del private_encasementlib.repy
 del dnscommon.repy
@@ -138,7 +140,6 @@ req sshkey_paramiko.r2py
 req sshkey.r2py
 req textops.py
 req deserialize.r2py
-req multiplexer.r2py
 req harshexit.py
 req portable_popen.py
 req seattleinstaller.py
