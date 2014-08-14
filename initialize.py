@@ -9,7 +9,7 @@
   Chintan Choksi
 
 <Purpose>
-  This script does a git check-out of all the dependent repositories 
+  This script does a `git clone` of all the dependent repositories 
   to the current directory.
   
 <Usage>
@@ -29,7 +29,7 @@ config_file = open("config_initialize.txt")
 
 for line in config_file.readlines():
   # Ignore comments and blank lines
-  if line.startswith("#") or line=='\n':
+  if line.startswith("#") or line.strip() == "":
     continue
 
   # If we end up here, the line contains a Git URL (+options?) for us to clone
