@@ -98,7 +98,7 @@ if [ ! -f "seattle_${VERSION}_android.zip" ] || [ ! -f "seattle_${VERSION}_linux
   exit 1
 fi
 
-sudo chown geni seattle_*
+sudo chown $USER seattle_*
 
 sudo -u $USER ln -s -f seattle_${VERSION}_linux.tgz seattle_linux.tgz
 sudo -u $USER ln -s -f seattle_${VERSION}_mac.tgz seattle_mac.tgz
