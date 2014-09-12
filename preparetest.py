@@ -319,14 +319,14 @@ def main():
   copy_tree_to_target("seash/modules/", os.path.join(target_dir, 'modules/'), ignore=".git")
 
   # Clearinghouse XML-RPC interface
-  copy_to_target("clearinghouse/xmlrpc_clients/*", target_dir)
+  copy_to_target("common/seattleclearinghouse_xmlrpc.py", target_dir)
 
   # Software updater
   copy_to_target("softwareupdater/*", target_dir)
   copy_to_target("dist/update_crontab_entry.py", target_dir)
 
   # The license must be included in anything we distribute.
-  copy_to_target("dist/LICENSE.TXT", target_dir)
+  copy_to_target("common/LICENSE", target_dir)
 
   if repytest:
     # Only copy the tests if they were requested.
