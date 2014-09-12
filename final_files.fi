@@ -138,7 +138,6 @@ req sshkey_paramiko.r2py
 req sshkey.r2py
 req textops.py
 req deserialize.r2py
-req multiplexer.r2py
 req harshexit.py
 req portable_popen.py
 req seattleinstaller.py
@@ -167,8 +166,6 @@ req advertise_objects.r2py
 req advertiseserver_v2.r2py
 req convert_print_to_log.sh
 req doradvertise.r2py
-req dylink_portability.py
-req dylinkrun.py
 req encasementlib.r2py
 req exception_hierarchy.py
 req librepyfile.r2py
@@ -178,7 +175,6 @@ req librepyrunloop.r2py
 req librepysocket.r2py
 req librepythread.r2py
 req pydes.r2py
-req README.txt
 req registerhttpcallback.r2py
 req repyV1
 req repyV2
@@ -187,6 +183,17 @@ req resourcemanipulation.py
 req secureadvertise_client.r2py
 req secureadvertise_server.r2py
 req secureclient.r2py
+
+req seattleclearinghouse_xmlrpc.py
+req advertisepipe.r2py
+req wrapper.r2py
+req cachedadvertise.r2py
+req restrictions.default
+req modules
+req readline.so.mac
+req opendhtadvertise.r2py
+req LICENSE
+
 
 # Affix additions 
 req affix_exceptions.r2py

@@ -21,6 +21,7 @@ del key_daemon.repy
 del key_daemon_parser.repy
 del nm_remote_api.py
 del rhizoma.py
+del *_r2py.py
 
 del private_wrapper.repy
 del private_encasementlib.repy
@@ -28,6 +29,10 @@ del dnscommon.repy
 del struct.repy
 del advertise_test_routine.repy
 del private_hideprivate_layer.repy
+del restrictions.tcp_relay
+del multiplexer.r2py
+del natlayer_rpc.r2py
+del nat_advertisement.r2py
 
 req domainnameinfo.r2py
 req benchmark_resources.py
@@ -152,7 +157,7 @@ req udpcentralizedadvertise.r2py
 req readline_windows.py
 req pyreadline
 
-req restrictions.advertiseserver
+#req restrictions.advertiseserver
 req advertiseserver_v2.r2py
 req repyV1
 req encasementlib.r2py
@@ -160,14 +165,12 @@ req tcp_relay_common_lib.r2py
 req pydes.r2py
 req opendhtadvertise.r2py
 req librepythread.r2py
-req natlayer_rpc.r2py
 req advertise_objects.r2py
 req librepyrunloop.r2py
 req repyV2
 req exception_hierarchy.py
 req doradvertise.r2py
 req resourcemanipulation.py
-req nat_advertisement.r2py
 req secureadvertise_server.r2py
 req librepysocket.r2py
 req secureclient.r2py
@@ -179,6 +182,14 @@ req resource_constants.py
 req convert_print_to_log.sh
 req secureadvertise_client.r2py
 req wrapper.r2py
+
+req advertisepipe.r2py
+req restrictions.default
+req modules
+req readline.so.mac
+req LICENSE
+req seattleclearinghouse_xmlrpc.py
+req cachedadvertise.r2py
 
 # Affix files...
 req affix_exceptions.r2py
