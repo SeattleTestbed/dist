@@ -10,8 +10,6 @@
 
 VERSION=$1
 
-USER=geni
-
 SOFTWARE_UPDATE_URL=http://seattlesoftwareupdater.poly.edu/updatesite/
 PUBLIC_KEY_FILE=/path/to/softwareupdater.publickey
 PRIVATE_KEY_FILE=/path/to/softwareupdater.privatekey
@@ -26,6 +24,9 @@ BASE_INSTALLER_DIRECTORY=/var/www/dist
 
 BASE_INSTALLER_ARCHIVE_DIR=/var/www/dist/old_base_installers
 
+USER=geni
+
+# Check variables first
 if [ "$VERSION" == "" ]; then
   echo "You must supply a version string."
   echo "usage: $0 version"
@@ -71,6 +72,13 @@ if [ "$UPDATE_KEY_FOUND" == "" ]; then
   exit 1
 fi
 
+if ! id $USER >/dev/null 2>/dev/null ; then
+  echo "User account '$USER' does not exist."
+  exit 1
+fi
+
+
+# Now let's start building!
 echo "Archiving old base installers to $BASE_INSTALLER_ARCHIVE_DIR"
 echo "Warning: failure after this point may leave seattlegeni with no base installers!"
 sudo mv -f $BASE_INSTALLER_DIRECTORY/seattle_* $BASE_INSTALLER_ARCHIVE_DIR

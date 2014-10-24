@@ -22,12 +22,19 @@ del key_daemon_parser.repy
 del nm_remote_api.py
 del rhizoma.py
 del *_repy.py
+del *_r2py.py
+del restrictions.tcp_relay
+del nat_advertisement.r2py
+del opendhtadvertise.r2py
+del multiplexer.r2py
+del natlayer_rpc.r2py
+del priority_queue.r2py
 
 del private_wrapper.repy
 del private_encasementlib.repy
 del dnscommon.repy
 del struct.repy
-del advertise_test_routine.repy
+del advertise_test_routine.r2py
 del private_hideprivate_layer.repy
 
 
@@ -87,6 +94,7 @@ req seash_exceptions.py
 req seash_global_variables.py
 req seash_helper.py
 req seash_modules.py
+req modules   # The seash 'modules' directory
 req serialize.r2py
 req servicelogger.py
 req servicelookup.r2py
@@ -150,11 +158,14 @@ req safe_eval.r2py
 req strace.py
 req stop_all_seattle_processes.py
 req geoip_client.r2py
-req priority_queue.r2py
 req centralizedadvertise_v2.r2py
 req udpcentralizedadvertise.r2py
 req readline_windows.py
+req readline.so.mac # seash Mac tab completion, see SeattleTestbed/attic#1136
 req pyreadline
+req advertisepipe.r2py
+req cachedadvertise.r2py
+req seattleclearinghouse_xmlrpc.py
 
 # Files added during install build:
 req metainfo

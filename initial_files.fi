@@ -21,13 +21,18 @@ del key_daemon.repy
 del key_daemon_parser.repy
 del nm_remote_api.py
 del rhizoma.py
-del *_r2py.py
+
+del natlayer_rpc.r2py
+del advertise_objects.r2py
+del priority_queue.r2py
+del multiplexer.r2py
+del restrictions.tcp_relay
 
 del private_wrapper.repy
 del private_encasementlib.repy
 del dnscommon.repy
 del struct.repy
-del advertise_test_routine.repy
+del advertise_test_routine.r2py
 del private_hideprivate_layer.repy
 del restrictions.tcp_relay
 del multiplexer.r2py
@@ -89,6 +94,7 @@ req seash_exceptions.py
 req seash_global_variables.py
 req seash_helper.py
 req seash_modules.py
+req modules   # The seash 'modules' directory
 req serialize.r2py
 req servicelogger.py
 req servicelookup.r2py
@@ -157,7 +163,7 @@ req udpcentralizedadvertise.r2py
 req readline_windows.py
 req pyreadline
 
-#req restrictions.advertiseserver
+req restrictions.default
 req advertiseserver_v2.r2py
 req repyV1
 req encasementlib.r2py
@@ -165,7 +171,6 @@ req tcp_relay_common_lib.r2py
 req pydes.r2py
 req opendhtadvertise.r2py
 req librepythread.r2py
-req advertise_objects.r2py
 req librepyrunloop.r2py
 req repyV2
 req exception_hierarchy.py
@@ -181,6 +186,13 @@ req registerhttpcallback.r2py
 req resource_constants.py
 req convert_print_to_log.sh
 req secureadvertise_client.r2py
+req wrapper.r2py
+req restrictions.default
+req LICENSE
+req advertisepipe.r2py
+req readline.so.mac  # for tab completion in seash, SeattleTestbed/attic#1136
+req cachedadvertise.r2py
+req seattleclearinghouse_xmlrpc.py
 req wrapper.r2py
 
 req advertisepipe.r2py
