@@ -44,7 +44,7 @@ def prepare_files(temp_demokit_dir):
 
   # Run preparetest to generate and place all general Seattle files in the
   # temporary directory.
-  p = subprocess.Popen(["python", "preparetest.py", temp_demokit_dir])
+  p = subprocess.Popen([sys.executable, "preparetest.py", temp_demokit_dir])
   p.wait()
 
 
