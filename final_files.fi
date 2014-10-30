@@ -195,14 +195,8 @@ req secureadvertise_client.r2py
 req secureadvertise_server.r2py
 req secureclient.r2py
 
-req seattleclearinghouse_xmlrpc.py
-req advertisepipe.r2py
 req wrapper.r2py
-req cachedadvertise.r2py
 req restrictions.default
-req modules
-req readline.so.mac
-req opendhtadvertise.r2py
 req LICENSE
 
 
