@@ -34,9 +34,6 @@ del dnscommon.repy
 del struct.repy
 del advertise_test_routine.r2py
 del private_hideprivate_layer.repy
-del restrictions.tcp_relay
-del multiplexer.r2py
-del natlayer_rpc.r2py
 del nat_advertisement.r2py
 
 req domainnameinfo.r2py
@@ -157,7 +154,6 @@ req safe_eval.r2py
 req strace.py
 req stop_all_seattle_processes.py
 req geoip_client.r2py
-req priority_queue.r2py
 req centralizedadvertise_v2.r2py
 req udpcentralizedadvertise.r2py
 req readline_windows.py
@@ -167,7 +163,6 @@ req restrictions.default
 req advertiseserver_v2.r2py
 req repyV1
 req encasementlib.r2py
-req tcp_relay_common_lib.r2py
 req pydes.r2py
 req opendhtadvertise.r2py
 req librepythread.r2py
@@ -187,21 +182,12 @@ req resource_constants.py
 req convert_print_to_log.sh
 req secureadvertise_client.r2py
 req wrapper.r2py
-req restrictions.default
 req LICENSE
 req advertisepipe.r2py
 req readline.so.mac  # for tab completion in seash, SeattleTestbed/attic#1136
 req cachedadvertise.r2py
 req seattleclearinghouse_xmlrpc.py
-req wrapper.r2py
 
-req advertisepipe.r2py
-req restrictions.default
-req modules
-req readline.so.mac
-req LICENSE
-req seattleclearinghouse_xmlrpc.py
-req cachedadvertise.r2py
 
 # Affix files...
 req affix_exceptions.r2py
